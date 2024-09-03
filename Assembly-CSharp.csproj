@@ -116,6 +116,7 @@
     <Compile Include="Assets/Scripts/PlayerManager.cs" />
     <Compile Include="Assets/Scripts/collideOverLay.cs" />
     <Compile Include="Assets/Scripts/SimpleVRMovement.cs" />
+    <Compile Include="Assets/Scripts/InstructionPanel.cs" />
     <Compile Include="Assets/Scripts/Tracker.cs" />
     <Compile Include="Assets/teleport_sender.cs" />
     <Compile Include="Assets/Scripts/Utility.cs" />

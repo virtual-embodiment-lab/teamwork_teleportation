@@ -77,7 +77,7 @@ public class UIManager: MonoBehaviour
         CreateCarryingCoinUI();
         CreateEnergyBarUI();
         CreateCollisionOverLay();
-        CreateDebugMessage();
+        //CreateDebugMessage();
         //CreateExitTacticalButton();
         UpdateEnergyUI();
         panelActive(panelShow);
