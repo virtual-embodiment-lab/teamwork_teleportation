@@ -30,7 +30,7 @@ public class InstructionPanel : MonoBehaviour
         {
             Transform player = GameObject.Find("XR Origin (XR Rig) teleport").transform;
             Vector3 plPosition = player.position;
-            transform.position = plPosition + new Vector3(0f, 1.5f, 0f) + player.forward * 2.0f;
+            transform.position = plPosition + new Vector3(0f, 1.5f, 0f) + player.forward * 1.5f;
             transform.rotation = Quaternion.LookRotation(player.forward, Vector3.up);
         }        
     }
