@@ -60,7 +60,7 @@
   </PropertyGroup>
   <ItemGroup>
     <Analyzer Include="/Users/Miki/.vscode/extensions/visualstudiotoolsforunity.vstuc-1.0.3/Analyzers/Microsoft.Unity.Analyzers.dll" />
-    <Analyzer Include="/Users/Miki/Documents/VEL/Git/motion-branch/Library/PackageCache/com.normalvr.normcore@2.6.3/Normal.Realtime.SourceGenerators/Normal.Realtime.SourceGenerators.dll" />
+    <Analyzer Include="/Users/Miki/Documents/VEL/Git/teamwork_teleportation/Library/PackageCache/com.normalvr.normcore@2.6.3/Normal.Realtime.SourceGenerators/Normal.Realtime.SourceGenerators.dll" />
     <Analyzer Include="/Applications/Unity/Hub/Editor/2022.3.15f1/Unity.app/Contents/Tools/Unity.SourceGenerators/Unity.SourceGenerators.dll" />
     <Analyzer Include="/Applications/Unity/Hub/Editor/2022.3.15f1/Unity.app/Contents/Tools/Unity.SourceGenerators/Unity.Properties.SourceGenerator.dll" />
   </ItemGroup>
