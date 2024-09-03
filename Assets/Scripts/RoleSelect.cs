@@ -12,7 +12,7 @@ public class RoleSelect : MonoBehaviour
     [SerializeField] private Material tacticalMaterial;
     [SerializeField] private Material explorerMaterial;
 
-    [Header("Switch")]
+    [Header("Instruction")]
     [SerializeField] private Texture NoneT;
     [SerializeField] private Texture ExplorerT;
     [SerializeField] private Texture CollectorT;
