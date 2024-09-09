@@ -12,7 +12,7 @@ public class VRNoPeeking : MonoBehaviour
     [SerializeField] float sphereCheckSize = .15f;
     [SerializeField] float teleportSphereCheckSize = .55f;
     [SerializeField] float threshold = 0.15f;
-    //[SerializeField] OVRPlayerController avatarController;
+    [SerializeField] Transform avatarController;
 
     private Material CameraFadeMat;
     private bool isCameraFadedOut = false;
@@ -21,11 +21,15 @@ public class VRNoPeeking : MonoBehaviour
     private Transform _xrOrigin;
     private Vector3 startPosition;
     private Vector3 endPosition;
+    private Vector3 prePosition;
+    private Transform headPos;
 
     private void Awake()
     {
         CameraFadeMat = GetComponent<Renderer>().material;
         _xrOrigin = transform.root;
+        headPos = GameObject.Find("Main Camera").GetComponent<Transform>();
+        prePosition = new Vector3(0.0f, 0.0f, 0.0f);
         teleportationProvider = FindObjectOfType<TeleportationProvider>();
         if (teleportationProvider != null)
         {
@@ -37,43 +41,55 @@ public class VRNoPeeking : MonoBehaviour
     // Update is called once per frame
     void Update()
     { 
-        GameObject locSystem = GameObject.Find("Locomotion System");
-        TeleportationProvider tProvider = locSystem.GetComponent<TeleportationProvider>();
-        ActionBasedSnapTurnProvider sProvider =locSystem.GetComponent<ActionBasedSnapTurnProvider>();
-
-        if(Physics.CheckSphere(transform.position, sphereCheckSize, collisionLayer, QueryTriggerInteraction.Ignore)) 
+        Vector3 currentPos = headPos.position;
+        if(Physics.CheckSphere(headPos.position, sphereCheckSize, collisionLayer, QueryTriggerInteraction.Ignore)) 
         {
-            if(!isCameraFadedOut)
-            {
-                isCameraFadedOut = true;
-                //avatarController.EnableLinearMovement = false;
-                //avatarController.EnableRotation = false;
-                tProvider.enabled = false;
-                //sProvider.enabled = false;
+            Vector3 previousMovement  = (prePosition - currentPos).normalized*0.01f;
 
-                StartCoroutine(FadeCamera(true, 1f));
-                //CameraFade(1f);
-                peekingPosition = transform.position;
+            while (Physics.CheckSphere(headPos.position, sphereCheckSize, collisionLayer, QueryTriggerInteraction.Ignore)) 
+            {
+                _xrOrigin.transform.position = _xrOrigin.transform.position - previousMovement;
             }
         }
-        else
-        {
-            if(!isCameraFadedOut)
-                return;
+        prePosition = headPos.position;
+        
+        // GameObject locSystem = GameObject.Find("Locomotion System");
+        // TeleportationProvider tProvider = locSystem.GetComponent<TeleportationProvider>();
+        // ActionBasedSnapTurnProvider sProvider =locSystem.GetComponent<ActionBasedSnapTurnProvider>();
 
-            float dist = Vector3.Distance(peekingPosition, transform.position);
-            if(dist < threshold)
-            {
-                isCameraFadedOut = false;
-                tProvider.enabled = true;
-                //sProvider.enabled = true;
-                //avatarController.EnableLinearMovement = true;
-                //avatarController.EnableRotation = true;
-                StartCoroutine(FadeCamera(false, 0f));
-                //CameraFade(0f);
-            }
+        // if(Physics.CheckSphere(transform.position, sphereCheckSize, collisionLayer, QueryTriggerInteraction.Ignore)) 
+        // {
+        //     if(!isCameraFadedOut)
+        //     {
+        //         isCameraFadedOut = true;
+        //         //avatarController.EnableLinearMovement = false;
+        //         //avatarController.EnableRotation = false;
+        //         tProvider.enabled = false;
+        //         //sProvider.enabled = false;
+
+        //         StartCoroutine(FadeCamera(true, 1f));
+        //         //CameraFade(1f);
+        //         peekingPosition = transform.position;
+        //     }
+        // }
+        // else
+        // {
+        //     if(!isCameraFadedOut)
+        //         return;
+
+        //     float dist = Vector3.Distance(peekingPosition, transform.position);
+        //     if(dist < threshold)
+        //     {
+        //         isCameraFadedOut = false;
+        //         tProvider.enabled = true;
+        //         //sProvider.enabled = true;
+        //         //avatarController.EnableLinearMovement = true;
+        //         //avatarController.EnableRotation = true;
+        //         StartCoroutine(FadeCamera(false, 0f));
+        //         //CameraFade(0f);
+        //     }
                 
-        }
+        // }
     }
 
     private void OnTeleportStart(LocomotionSystem locomotionSystem)
@@ -91,7 +107,7 @@ public class VRNoPeeking : MonoBehaviour
             foreach (GameObject avatar in avatars)
             {
                 UIManager uiManager = avatar.GetComponent<UIManager>();
-                uiManager.ShowMessage($"{direction.ToString()}");
+                //uiManager.ShowMessage($"{direction.ToString()}");
             }
             _xrOrigin.position = _xrOrigin.position - direction;
         }

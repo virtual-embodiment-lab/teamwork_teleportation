@@ -24,8 +24,9 @@ public class UIManager: MonoBehaviour
     private TextMeshProUGUI _coinsCollectedText;
     private TextMeshProUGUI _batteryCountText;
     private TextMeshProUGUI _messages;
+    private TextMeshProUGUI _nextTarget;
     private TextMeshProUGUI _carryingCoinText;
-    private TextMeshProUGUI _DebugMessage;
+    //private TextMeshProUGUI _DebugMessage;
     //private Button _exitTacticalButton;
     private RectTransform _uiPanel;
     private Canvas _mainCanvas;
@@ -77,6 +78,7 @@ public class UIManager: MonoBehaviour
         CreateCarryingCoinUI();
         CreateEnergyBarUI();
         CreateCollisionOverLay();
+        CreateTargetShape();
         //CreateDebugMessage();
         //CreateExitTacticalButton();
         UpdateEnergyUI();
@@ -90,22 +92,8 @@ public class UIManager: MonoBehaviour
         UpdateBatteryNumber();
         UpdateCoinNumber();
         UpdateEnergyUI();
+        UpdateNextTarget();
         UpdateRoleDependentUI();
-
-        // get controller button
-/*         
-        if(OVRInput.GetUp(OVRInput.Button.One) || Input.GetKey(KeyCode.UpArrow))
-        {
-            panelShow = !panelShow;
-            Logger_new lg = _player.GetComponent<Logger_new>();
-            if(panelShow){
-                lg.AddLine("UIPanel:show");
-            }else{
-                lg.AddLine("UIPanel:hide");
-            }
-            panelActive(panelShow);
-        }
-*/
     }
 
     private void InitializeMainCanvas()
@@ -209,23 +197,29 @@ public class UIManager: MonoBehaviour
         _coinsCollectedText.text = "Coins: 0";
     }
 
-    private void CreateBatteryCountUI()
+        private void CreateBatteryCountUI()
     {
-        _batteryCountText = CreateUIElement<TextMeshProUGUI>("BatteryCountText", new Vector2(0.5f, 1), new Vector2(1, 1), new Vector2(-55, -65), new Vector2(-5, -65), 20);
+        _batteryCountText = CreateUIElement<TextMeshProUGUI>("BatteryCountText", new Vector2(0, 1), new Vector2(0.5f, 1), new Vector2(5, -65), new Vector2(55, -65), 20);
         _batteryCountText.text = $"Batteries: {_player.carryingBatteries}";
     }
 
     private void CreateCarryingCoinUI()
     {
-        _carryingCoinText = CreateUIElement<TextMeshProUGUI>("CarryingCoinText", new Vector2(0.5f, 1), new Vector2(1, 1), new Vector2(-55, -95), new Vector2(-5, -95), 20);
+        _carryingCoinText = CreateUIElement<TextMeshProUGUI>("CarryingCoinText", new Vector2(0, 1), new Vector2(0.5f, 1), new Vector2(5, -95), new Vector2(55, -95), 20);
         _carryingCoinText.text = $"Carrying Coins: {_player.carryingCoins}";
     }
 
-    private void CreateDebugMessage()
+    private void CreateTargetShape()
     {
-        _DebugMessage = CreateUIElement<TextMeshProUGUI>("DebugMessage", new Vector2(0.5f, 1), new Vector2(1, 1), new Vector2(-55, -125), new Vector2(-5, -125), 20);
-        _DebugMessage.text = "Message here";
+        _nextTarget = CreateUIElement<TextMeshProUGUI>("DebugMessage", new Vector2(0, 1), new Vector2(0.5f, 1), new Vector2(5, -125), new Vector2(55, -125), 20);
+        _nextTarget.text = "Next target: any";
     }
+
+    // private void CreateDebugMessage()
+    // {
+    //     _DebugMessage = CreateUIElement<TextMeshProUGUI>("DebugMessage", new Vector2(0.5f, 1), new Vector2(1, 1), new Vector2(-55, -125), new Vector2(-5, -125), 20);
+    //     _DebugMessage.text = "Message here";
+    // }
 /*
     private void CreateExitTacticalButton()
     {
@@ -435,6 +429,7 @@ public class UIManager: MonoBehaviour
     {
         _batteryCountText.gameObject.SetActive(_player.currentRole == Role.Collector);
         _carryingCoinText.gameObject.SetActive(_player.currentRole == Role.Collector);
+        _nextTarget.gameObject.SetActive(_player.currentRole == Role.Collector);
         _energyBar.gameObject.SetActive(_player.currentRole == Role.Explorer);
         /*
         if (_player.currentRole == Role.Tactical)
@@ -445,10 +440,10 @@ public class UIManager: MonoBehaviour
         */
     }
 
-    public void ShowMessage(string msg)
-    {
-        _DebugMessage.text = msg;
-    }
+//     public void ShowMessage(string msg)
+//     {
+//         _DebugMessage.text = msg;
+//     }
 /*
     public void SetCrosshairVisibility(bool isVisible)
     {
@@ -464,6 +459,14 @@ public class UIManager: MonoBehaviour
         if (_energyBar != null)
         {
             _energyBar.rectTransform.sizeDelta = new Vector2(110 * (_player.CurrentEnergy / _player.MaxEnergy), 20);
+        }
+    }
+
+    private void UpdateNextTarget()
+    {
+        if (_nextTarget != null)
+        {
+            _nextTarget.text = $"Next target: {_player.targetCoin.ToString()}";
         }
     }
 
