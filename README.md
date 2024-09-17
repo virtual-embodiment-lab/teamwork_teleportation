@@ -30,18 +30,16 @@ Here is the current publication from the initial work on this project: [View Pub
     - [Bug Fixes](#bug-fixes)
     - [Improvements](#improvements)
 
-## Task List
+## Reported Bugs
 
 - [ ] Place coins within the current maze and configure them correctly.
 - [x] Setup the new start area and import the scripts from the old one. [Spring, 2024]
 - [ ] Allow players to change between the two robot avatars and change color.
-- [ ] Fix head and hands (OVRPlayerController) go through the walls.
-- [ ] Add in logging functionality from the [VELLib](https://github.com/virtual-embodiment-lab/vellib).
-
-[VELLib](https://github.com/virtual-embodiment-lab/vellib) is a collection of scripts that were made to support development of project in the Virtual Emobodiment Lab.
-
-For more informaiton on how to work with VEL resources please visit the [onboarding](https://github.com/virtual-embodiment-lab/Onboarding) and [tutorial](https://github.com/virtual-embodiment-lab/unity-tutorial) documentation. If you do not have access to these respositories contact the lab manager for access.
-
+- [x] Fix head and hands (OVRPlayerController) go through the walls. [Summer, 2024]
+- [x] Add in logging functionality. [Spring, 2024]
+- [ ] Timeup display is not displayed.
+- [ ] Adjust the avatar size.
+- [ ] Make tutorial sessions.
 
 ## Installation Guide
 
